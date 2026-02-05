@@ -16,8 +16,14 @@ RUN apt-get update && apt-get install -y \
 # --------------------
 # Install Semgrep (pinned, robust)
 # --------------------
-RUN pip3 install --no-cache-dir semgrep && semgrep --version
-# --------------------
+RUN python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install --upgrade pip && \
+    /opt/venv/bin/pip install semgrep
+
+# Optional: add to PATH
+ENV PATH="/opt/venv/bin:$PATH"# --------------------
+
+RUN semgrep --version
 # Install CodeQL
 # --------------------
 ENV CODEQL_VERSION=2.17.5
