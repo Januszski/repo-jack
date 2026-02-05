@@ -25,6 +25,17 @@ RUN git clone https://github.com/ggerganov/llama.cpp.git /opt/llama.cpp && \
     cmake .. && \
     make -j$(nproc)
 
+
+# Add llama.cpp binary to PATH
+ENV PATH="/opt/llama.cpp/build:$PATH"
+
+# --------------------
+# Download a small quantized model
+# --------------------
+RUN mkdir -p /app/models && \
+    wget -O /app/models/ggml-model-q4_0.bin \
+    https://huggingface.co/TheBloke/guanaco-7B-GGUF/resolve/main/ggml-model-q4_0.bin
+
 # --------------------
 # Install Semgrep inside a virtual environment
 # --------------------
