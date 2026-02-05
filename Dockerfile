@@ -14,17 +14,16 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
  && rm -rf /var/lib/apt/lists/*
 
- # --------------------
-# Install llama.cpp
 # --------------------
-RUN apt-get update && apt-get install -y build-essential cmake wget && rm -rf /var/lib/apt/lists/*
+# Install llama.cpp using CMake
+# --------------------
+RUN apt-get update && apt-get install -y build-essential cmake wget git && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/ggerganov/llama.cpp.git /opt/llama.cpp && \
-    cd /opt/llama.cpp && \
-    make
-
-RUN mkdir -p /app/models && \
-    wget -O /app/models/ggml-model-q4_0.bin "https://huggingface.co/your-model/resolve/main/ggml-model-q4_0.bin"
+    mkdir -p /opt/llama.cpp/build && \
+    cd /opt/llama.cpp/build && \
+    cmake .. && \
+    make -j$(nproc)
 
 # --------------------
 # Install Semgrep inside a virtual environment
