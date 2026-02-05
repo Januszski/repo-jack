@@ -10,16 +10,13 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     ca-certificates \
+    python3-pip \
  && rm -rf /var/lib/apt/lists/*
 
 # --------------------
 # Install Semgrep (pinned, robust)
 # --------------------
-ENV SEMGREP_VERSION=1.78.0
-
-RUN curl -fsSL https://semgrep.dev/install.sh | \
-    SEMGREP_VERSION=${SEMGREP_VERSION} bash
-
+RUN pip3 install --no-cache-dir semgrep && semgrep --version
 # --------------------
 # Install CodeQL
 # --------------------
