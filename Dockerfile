@@ -21,7 +21,7 @@ RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/pip install semgrep
 
 # Optional: add to PATH
-ENV PATH="/opt/venv/bin:$PATH"# --------------------
+ENV PATH="/opt/venv/bin:$PATH"
 
 RUN semgrep --version
 # Install CodeQL
