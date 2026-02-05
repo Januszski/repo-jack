@@ -14,6 +14,15 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
  && rm -rf /var/lib/apt/lists/*
 
+ # --------------------
+# Install llama.cpp
+# --------------------
+RUN apt-get update && apt-get install -y build-essential cmake wget && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/ggerganov/llama.cpp.git /opt/llama.cpp && \
+    cd /opt/llama.cpp && \
+    make
+
 # --------------------
 # Install Semgrep inside a virtual environment
 # --------------------
