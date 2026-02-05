@@ -23,6 +23,9 @@ RUN git clone https://github.com/ggerganov/llama.cpp.git /opt/llama.cpp && \
     cd /opt/llama.cpp && \
     make
 
+RUN mkdir -p /app/models && \
+    wget -O /app/models/ggml-model-q4_0.bin "https://huggingface.co/your-model/resolve/main/ggml-model-q4_0.bin"
+
 # --------------------
 # Install Semgrep inside a virtual environment
 # --------------------
