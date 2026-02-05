@@ -11,19 +11,25 @@ RUN apt-get update && apt-get install -y \
     git \
     ca-certificates \
     python3-pip \
+    python3-venv \
  && rm -rf /var/lib/apt/lists/*
 
 # --------------------
-# Install Semgrep (pinned, robust)
+# Install Semgrep inside a virtual environment
 # --------------------
+ENV SEMGREP_VERSION=1.78.0
+
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/pip install --upgrade pip && \
-    /opt/venv/bin/pip install semgrep
+    /opt/venv/bin/pip install semgrep==${SEMGREP_VERSION}
 
-# Optional: add to PATH
+# Add the virtual environment to PATH so semgrep is available globally
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Quick sanity check
 RUN semgrep --version
+
+# --------------------
 # Install CodeQL
 # --------------------
 ENV CODEQL_VERSION=2.17.5
